@@ -1,9 +1,9 @@
 package day09_test
 
 import (
-	"spissable/advent-of-go-template/day09"
-	"spissable/advent-of-go-template/utils"
 	"testing"
+	"yrahul3910/aoc-2025-go/day09"
+	"yrahul3910/aoc-2025-go/utils"
 )
 
 func TestSolvePuzzle1(t *testing.T) {
