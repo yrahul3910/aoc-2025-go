@@ -77,12 +77,10 @@ func SolvePuzzle2(input string) int {
 
 	for _, id_range := range ranges {
 		range_start, range_end := get_range(id_range)
-		fmt.Printf("Range [%d, %d]\n", range_start, range_end)
 
 		for j := range_start; j <= range_end; j++ {
 			cur_num := fmt.Sprintf("%d", j)
 			if has_repeated_pattern(cur_num) {
-				fmt.Printf("%d\n", j)
 				sum += j
 			}
 		}
