@@ -7,22 +7,28 @@ import (
 	"strings"
 )
 
+func get_range(input string) (int, int) {
+	range_bounds := strings.Split(input, "-")
+
+	range_start, err := strconv.ParseInt(strings.TrimSpace(range_bounds[0]), 10, 64)
+	if err != nil {
+		panic(err)
+	}
+
+	range_end, err := strconv.ParseInt(strings.TrimSpace(range_bounds[1]), 10, 64)
+	if err != nil {
+		panic(err)
+	}
+
+	return int(range_start), int(range_end)
+}
+
 func SolvePuzzle1(input string) int {
 	ranges := strings.Split(input, ",")
 	sum := 0
 
 	for _, id_range := range ranges {
-		range_bounds := strings.Split(id_range, "-")
-
-		range_start, err := strconv.ParseInt(strings.TrimSpace(range_bounds[0]), 10, 64)
-		if err != nil {
-			panic(err)
-		}
-
-		range_end, err := strconv.ParseInt(strings.TrimSpace(range_bounds[1]), 10, 64)
-		if err != nil {
-			panic(err)
-		}
+		range_start, range_end := get_range(id_range)
 
 		for j := range_start; j <= range_end; j++ {
 			// Simple case
@@ -43,7 +49,7 @@ func SolvePuzzle1(input string) int {
 				panic(err)
 			}
 
-			if j%dividend == 0 {
+			if j%int(dividend) == 0 {
 				sum += int(j)
 			}
 		}
@@ -52,7 +58,35 @@ func SolvePuzzle1(input string) int {
 	return sum
 }
 
+func has_repeated_pattern(s string) bool {
+	n := len(s)
+	for patternLen := 1; patternLen <= n/2; patternLen++ {
+		if n%patternLen == 0 {
+			pattern := s[:patternLen]
+			if strings.Repeat(pattern, n/patternLen) == s {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func SolvePuzzle2(input string) int {
-	// TODO: solve puzzle 2
-	return 0
+	ranges := strings.Split(input, ",")
+	sum := 0
+
+	for _, id_range := range ranges {
+		range_start, range_end := get_range(id_range)
+		fmt.Printf("Range [%d, %d]\n", range_start, range_end)
+
+		for j := range_start; j <= range_end; j++ {
+			cur_num := fmt.Sprintf("%d", j)
+			if has_repeated_pattern(cur_num) {
+				fmt.Printf("%d\n", j)
+				sum += j
+			}
+		}
+	}
+
+	return sum
 }
