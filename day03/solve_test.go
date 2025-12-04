@@ -15,5 +15,5 @@ func TestSolvePuzzle1(t *testing.T) {
 func TestSolvePuzzle2(t *testing.T) {
 	input := utils.ReadInput(t)
 	result := day03.SolvePuzzle2(input)
-	utils.LogResult(t, result)
+	utils.LogResultBigInt(t, result)
 }
