@@ -5,14 +5,8 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"yrahul3910/aoc-2025-go/utils"
 )
-
-func PrintArray(arr []int) {
-	for _, i := range arr {
-		fmt.Print(i)
-	}
-	fmt.Println()
-}
 
 func ParseLine(line string) []int {
 	batteries := make([]int, 0, len(line))
@@ -61,7 +55,7 @@ func SolvePuzzle1(input string) int {
 		}
 
 		batteries := ParseLine(line)
-		PrintArray(batteries)
+		utils.PrintArray(batteries)
 		cur := HighestJoltage(batteries)
 		fmt.Println(cur)
 

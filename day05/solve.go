@@ -5,6 +5,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"yrahul3910/aoc-2025-go/utils"
 )
 
 type _range struct {
@@ -12,20 +13,8 @@ type _range struct {
 	end   int64
 }
 
-func PrintRange(i _range) {
-	fmt.Printf("[%d, %d]", i.start, i.end)
-}
-
-func PrintArray(arr []_range) {
-	fmt.Print("(")
-	for idx, i := range arr {
-		PrintRange(i)
-
-		if idx < len(arr)-1 {
-			fmt.Print(", ")
-		}
-	}
-	fmt.Println(")")
+func (r _range) String() string {
+	return fmt.Sprintf("[%d, %d]", r.start, r.end)
 }
 
 func isFresh(ranges []_range, val int) bool {
@@ -112,7 +101,7 @@ func SolvePuzzle1(input string) int {
 
 func SolvePuzzle2(input string) int {
 	sortedRanges, _ := GetSortedRanges(input)
-	PrintArray(sortedRanges)
+	utils.PrintArray(sortedRanges)
 	ct := 0
 
 	for _, curRange := range sortedRanges {

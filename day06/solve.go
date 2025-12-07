@@ -5,19 +5,8 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"yrahul3910/aoc-2025-go/utils"
 )
-
-func PrintArray[T any](arr []T) {
-	fmt.Print("{")
-	for idx, i := range arr {
-		fmt.Print(i)
-
-		if idx < len(arr)-1 {
-			fmt.Print(", ")
-		}
-	}
-	fmt.Println("}")
-}
 
 // make an "enum"
 type Operator int
@@ -62,7 +51,7 @@ func (problem Problem) String() string {
 }
 
 func PrintProblems(problems []Problem) {
-	PrintArray(problems)
+	utils.PrintArray(problems)
 	fmt.Printf("#problems: %d\n", len(problems))
 }
 
