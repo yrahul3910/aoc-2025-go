@@ -13,6 +13,5 @@ func PrintArray[T any](arr []T) {
 			fmt.Print(", ")
 		}
 	}
-	fmt.Println("}")
-	fmt.Printf("size: %d\n", len(arr))
+	fmt.Print("}")
 }
