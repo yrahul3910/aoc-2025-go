@@ -1,7 +1,6 @@
 package day07
 
 import (
-	"fmt"
 	"strings"
 	"yrahul3910/aoc-2025-go/utils"
 )
@@ -45,11 +44,6 @@ func SolvePuzzle1(input string) int {
 
 	for _, line := range lines {
 		splitters := GetPositions(line, "^")
-		fmt.Print("splitters = ")
-		utils.PrintArray(splitters)
-		fmt.Print("beams = ")
-		PrintSet(beams, 0, nCols)
-		fmt.Println()
 
 		for _, pos := range splitters {
 			// is there a beam in this position (column)?
@@ -71,6 +65,38 @@ func SolvePuzzle1(input string) int {
 }
 
 func SolvePuzzle2(input string) int {
-	// TODO: solve puzzle 2
-	return 0
+	lines := strings.Split(input, "\n")
+	initialPos := strings.Index(lines[0], "S")
+	nCols := len(lines[0])
+
+	weights := make([]int, nCols)
+	weights[initialPos] = 1
+	beams := map[int]bool{initialPos: true}
+
+	for _, line := range lines {
+		splitters := GetPositions(line, "^")
+
+		for _, pos := range splitters {
+			// is there a beam in this position (column)?
+			if beams[pos] == true {
+				if pos > 0 {
+					weights[pos-1] += weights[pos]
+					beams[pos-1] = true
+				}
+				if pos < nCols-1 {
+					weights[pos+1] += weights[pos]
+					beams[pos+1] = true
+				}
+				weights[pos] = 0
+				delete(beams, pos)
+			}
+		}
+	}
+
+	sum := 0
+	for _, val := range weights {
+		sum += val
+	}
+
+	return sum
 }
