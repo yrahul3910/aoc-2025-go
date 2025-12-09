@@ -122,8 +122,8 @@ func GetNLowest(arr [][]float64, n int) []Index2D {
 		return a.idx.j - b.idx.j
 	})
 
-	result := make([]Index2D, n)
-	for i := range n {
+	result := make([]Index2D, min(n, len(values)))
+	for i := range min(n, len(values)) {
 		result[i] = values[i].idx
 	}
 
@@ -163,6 +163,28 @@ func SolvePuzzle1(input string) int {
 }
 
 func SolvePuzzle2(input string) int {
-	// TODO: solve puzzle 2
-	return 0
+	points := ParseInput(input)
+
+	uf := NewUnionFind[Coordinate]()
+	for _, point := range points {
+		uf.MakeSet(point)
+	}
+
+	dist := GetDistanceMatrix(points)
+	lowest := GetNLowest(dist, 10000) // abuse the `min` in `GetNLowest`
+
+	lastMerged1, lastMerged2 := int64(-1), int64(-1)
+
+	for i := 0; i < len(lowest) && len(uf.Components()) > 1; i++ {
+		idx := lowest[i]
+
+		// merge nodes `idx.i` and `idx.j`
+		uf.UnionValues(points[idx.i], points[idx.j])
+
+		// only need product of x-coordinates
+		lastMerged1 = points[idx.i].x
+		lastMerged2 = points[idx.j].x
+	}
+
+	return int(lastMerged1) * int(lastMerged2)
 }
